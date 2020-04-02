@@ -44,19 +44,6 @@ function getMonthName(month)
 
 function sendMail(name, month, address, body)
 {
-    /*
-    Email.send({
-        Host : "smtp.gmail.com",
-        Username : "north.eugene.service.time",
-        Password : "lalalalalalalalalalalalalalalala981!",
-        To : address,
-        From : name,
-        Subject : `Service time for ${name} for ${month}`,
-        Body : body
-        }).then(
-            message => alert(message)
-    );
-    */
    window.open(`mailto:${address}?subject=${name} Field Service Report&body=${body}`);
 }
 
@@ -66,16 +53,16 @@ function saveData(email, name, placements, videos, hours, rvs, studies, comments
     const d = new Date();
     const m = d.getMonth() - 1;
     const y = getYear();
-    localStorage.setItem("email", email);
-    localStorage.setItem("name", name);
-    localStorage.setItem("placements", placements.toString());
-    localStorage.setItem("videos", videos.toString());
-    localStorage.setItem("hours", hours.toString());
-    localStorage.setItem("rvs", rvs.toString());
-    localStorage.setItem("studies", studies.toString());
-    localStorage.setItem("comments", comments);
-    localStorage.setItem("month", m.toString());
-    localStorage.setItem("year", y.toString());
+    window.localStorage.setItem("email", email);
+    window.localStorage.setItem("name", name);
+    window.localStorage.setItem("placements", placements.toString());
+    window.localStorage.setItem("videos", videos.toString());
+    window.localStorage.setItem("hours", hours.toString());
+    window.localStorage.setItem("rvs", rvs.toString());
+    window.localStorage.setItem("studies", studies.toString());
+    window.localStorage.setItem("comments", comments);
+    window.localStorage.setItem("month", m.toString());
+    window.localStorage.setItem("year", y.toString());
 }
 
 
@@ -100,19 +87,19 @@ function getElement(id)
 
 function populateData(email, name, placements, videos, hours, rvs, studies, comments)
 {
-    if (email.value) {
-        setElement("email", email.value);
+    if (email) {
+        setElement("email", email);
     }
-    if (name.value) {
-        setElement("name", name.value);
+    if (name) {
+        setElement("name", name);
     }
-    setElement("placements", placements.value);
-    setElement("videos", videos.value);
-    setElement("hours", hours.value);
-    setElement("rvs", rvs.value);
-    setElement("studies", studies.value);
-    if (comments.value) {
-        setElement("comments", comments.value);
+    setElement("placements", placements);
+    setElement("videos", videos);
+    setElement("hours", hours);
+    setElement("rvs", rvs);
+    setElement("studies", studies);
+    if (comments) {
+        setElement("comments", comments);
     }
 }
 
@@ -126,17 +113,17 @@ function postLoad()
     if (e) {
         e.textContent = `North Eugene Field Service Report: ${getMonthName(m)} ${y}`
     }
-    const email = localStorage.getItem("email");
-    const name = localStorage.getItem("name");
-    const placements = parseInt(localStorage.getItem("placements"));
-    const videos = parseInt(localStorage.getItem("videos"));
-    const hours = parseInt(localStorage.getItem("hours"));
-    const rvs = parseInt(localStorage.getItem("rvs"));
-    const studies = parseInt(localStorage.getItem("studies"));
-    const comments = localStorage.getItem("comments");
+    const email = window.localStorage.getItem("email");
+    const name = window.localStorage.getItem("name");
+    const placements = parseInt(window.localStorage.getItem("placements"));
+    const videos = parseInt(window.localStorage.getItem("videos"));
+    const hours = parseInt(window.localStorage.getItem("hours"));
+    const rvs = parseInt(window.localStorage.getItem("rvs"));
+    const studies = parseInt(window.localStorage.getItem("studies"));
+    const comments = window.localStorage.getItem("comments");
     populateData(email, name, placements, videos, hours, rvs, studies, comments);
-    const storedMonth = parseInt(localStorage.getItem("month"));
-    const storedYear = parseInt(localStorage.getItem("year"));
+    const storedMonth = parseInt(window.localStorage.getItem("month"));
+    const storedYear = parseInt(window.localStorage.getItem("year"));
     if (storedMonth === m && storedYear === y) {
         setAlertText(`Report submitted for ${getMonthName(m)} ${y}`);
     }
@@ -197,3 +184,4 @@ window.onload = function()
 {
     postLoad();
 };
+
