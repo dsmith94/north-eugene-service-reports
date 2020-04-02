@@ -44,7 +44,7 @@ function getMonthName(month)
 
 function sendMail(name, month, address, body)
 {
-   window.open(`mailto:${address}?subject=${name} Field Service Report&body=${body}`);
+   window.open(`mailto:${address}?subject=${name} Field Service Report&enctype="text/plain"&body=${body}`);
 }
 
 
