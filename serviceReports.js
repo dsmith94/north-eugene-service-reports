@@ -132,8 +132,8 @@ function postLoad()
 
 function makeReport(month, year, placements, videos, hours, rvs, studies, comments)
 {
-    const newline = "%0D%0A";
-    return `
+    const newline = "\n";
+    return encodeURIComponent(`
 For ${getMonthName(month)} ${year}:${newline}
 Placements (Printed and Electronic): ${placements}${newline}
 Video Showings: ${videos}${newline}
@@ -141,7 +141,7 @@ Hours: ${hours}${newline}
 Return Visits: ${rvs}${newline}
 Number of Different Bible Studies Conducted: ${studies}${newline}
 Comments: ${comments}${newline}
-    `;
+    `);
 }
 
 
