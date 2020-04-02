@@ -133,13 +133,13 @@ function postLoad()
 function makeReport(month, year, placements, videos, hours, rvs, studies, comments)
 {
     return encodeURIComponent(`
-For ${getMonthName(month)} ${year}:\r\n
-Placements (Printed and Electronic): ${placements}\r\n
-Video Showings: ${videos}\r\n
-Hours: ${hours}\r\n
-Return Visits: ${rvs}\r\n
-Number of Different Bible Studies Conducted: ${studies}\r\n
-Comments: ${comments}\r\n
+For ${getMonthName(month)} ${year}:\n
+Placements (Printed and Electronic): ${placements}\n
+Video Showings: ${videos}\n
+Hours: ${hours}\n
+Return Visits: ${rvs}\n
+Number of Different Bible Studies Conducted: ${studies}\n
+Comments: ${comments}\n
     `);
 }
 
