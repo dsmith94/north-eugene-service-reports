@@ -64,18 +64,18 @@ function sendMail(name, month, address, body)
 function saveData(email, name, placements, videos, hours, rvs, studies, comments)
 {
     const d = new Date();
-    const m = d.getMonth();
+    const m = d.getMonth() - 1;
     const y = getYear();
-    localStorage.email = email;
-    localStorage.name = name;
-    localStorage.placements = placements;
-    localStorage.videos = videos;
-    localStorage.hours = hours;
-    localStorage.rvs = rvs;
-    localStorage.studies = studies;
-    localStorage.comments = comments;
-    localStorage.month = m - 1;
-    localStorage.year = y;
+    localStorage.setItem("email", email);
+    localStorage.setItem("name", name);
+    localStorage.setItem("placements", placements.toString());
+    localStorage.setItem("videos", videos.toString());
+    localStorage.setItem("hours", hours.toString());
+    localStorage.setItem("rvs", rvs.toString());
+    localStorage.setItem("studies", studies.toString());
+    localStorage.setItem("comments", comments);
+    localStorage.setItem("month", m.toString());
+    localStorage.setItem("year", y.toString());
 }
 
 
@@ -126,8 +126,18 @@ function postLoad()
     if (e) {
         e.textContent = `North Eugene Field Service Report: ${getMonthName(m)} ${y}`
     }
-    populateData(localStorage.email, localStorage.name, localStorage.placements, localStorage.videos, localStorage.hours, localStorage.rvs, localStorage.studies, localStorage.comments);
-    if (localStorage.month === m && localStorage.year === y) {
+    const email = localStorage.getItem("email");
+    const name = localStorage.getItem("name");
+    const placements = parseInt(localStorage.getItem("placements"));
+    const videos = parseInt(localStorage.getItem("videos"));
+    const hours = parseInt(localStorage.getItem("hours"));
+    const rvs = parseInt(localStorage.getItem("rvs"));
+    const studies = parseInt(localStorage.getItem("studies"));
+    const comments = localStorage.getItem("comments");
+    populateData(email, name, placements, videos, hours, rvs, studies, comments);
+    const storedMonth = parseInt(localStorage.getItem("month"));
+    const storedYear = parseInt(localStorage.getItem("year"));
+    if (storedMonth === m && storedYear === y) {
         setAlertText(`Report submitted for ${getMonthName(m)} ${y}`);
     }
 }
@@ -187,4 +197,3 @@ window.onload = function()
 {
     postLoad();
 };
-
