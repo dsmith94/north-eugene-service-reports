@@ -132,16 +132,25 @@ function postLoad()
 
 function makeReport(month, year, placements, videos, hours, rvs, studies, comments)
 {
+    const otherNewline = "%0A";
     const newline = "\n";
-    return encodeURIComponent(`
-For ${getMonthName(month)} ${year}:${newline}
-Placements (Printed and Electronic): ${placements}${newline}
-Video Showings: ${videos}${newline}
-Hours: ${hours}${newline}
-Return Visits: ${rvs}${newline}
-Number of Different Bible Studies Conducted: ${studies}${newline}
-Comments: ${comments}${newline}
-    `);
+    var s = `
+    For ${getMonthName(month)} ${year}:${newline}
+    
+    Placements (Printed and Electronic): ${placements}${newline}
+    
+    Video Showings: ${videos}${newline}
+    
+    Hours: ${hours}${newline}
+    
+    Return Visits: ${rvs}${newline}
+    
+    Number of Different Bible Studies Conducted: ${studies}${newline}
+    
+    Comments: ${comments}${newline}
+    
+        `;
+    return encodeURIComponent(s);
 }
 
 
