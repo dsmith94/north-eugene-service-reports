@@ -132,8 +132,7 @@ function postLoad()
 
 function makeReport(month, year, placements, videos, hours, rvs, studies, comments)
 {
-    const otherNewline = "%0A";
-    const newline = "\n";
+    const newline = "\r\n%0A";
     var s = `
     For ${getMonthName(month)} ${year}:${newline}
     
@@ -150,7 +149,7 @@ function makeReport(month, year, placements, videos, hours, rvs, studies, commen
     Comments: ${comments}${newline}
     
         `;
-    return encodeURIComponent(s);
+    return s;
 }
 
 
