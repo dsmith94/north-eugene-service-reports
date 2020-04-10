@@ -230,11 +230,6 @@ function handleInstall()
     const installButton = document.getElementById("install-button");
     installButton.addEventListener('click', () => {
         const promptEvent = window.deferredPrompt;
-        console.log('👍', promptEvent);
-        if (!promptEvent) {
-          // The deferred prompt isn't available.
-          return;
-        }
         // Show the install prompt.
         promptEvent.prompt();
         // Log the result
