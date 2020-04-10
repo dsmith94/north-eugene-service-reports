@@ -10,8 +10,8 @@ self.addEventListener('install', (event) => {
   
   self.addEventListener('fetch', function(event) {
     console.log('👷', 'fetch', event);
-    if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') {
-        return;
-      }
+    //if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') {
+    //    return;
+    //  }
     event.respondWith(fetch(event.request));
   });
