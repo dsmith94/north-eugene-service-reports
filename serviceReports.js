@@ -132,7 +132,8 @@ function postLoad()
 
 function makeReport(month, year, placements, videos, hours, rvs, studies, comments)
 {
-    const newline = "\r\n%0D%0A";
+    //const newline = "\r\n%0D%0A";
+    const newline = "<br>";
     var s = `
     For ${getMonthName(month)} ${year}:${newline}
     
@@ -149,8 +150,7 @@ function makeReport(month, year, placements, videos, hours, rvs, studies, commen
     Comments: ${comments}${newline}
     
         `;
-    alert ("a href=\"mailto:?body=%3Ca%20href%3D%22{{ scope.url }}%22%3E%3Cimg%20src%3D%22{{ scope.url }}%22%20width%3D%22300%22%20%2F%3E%3C%2Fa%3E\"");
-    return "a href=\"mailto:?body=%3Ca%20href%3D%22{{ scope.url }}%22%3E%3Cimg%20src%3D%22{{ scope.url }}%22%20width%3D%22300%22%20%2F%3E%3C%2Fa%3E\"";
+    return encodeURIComponent(s);
 }
 
 
