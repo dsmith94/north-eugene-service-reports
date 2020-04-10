@@ -42,18 +42,19 @@ function getMonthName(month)
 }
 
 
-function sendMail(name, month, address, body)
+function sendMail(name, month, email, secretary_email, body)
 {
-   window.open(`mailto:${address}?subject=${name} Field Service Report&enctype="text/plain"&body=${body}`);
+   window.open(`mailto:${email}&cc=${secretary_email}?subject=${name} Field Service Report ${month}&enctype="text/plain"&body=${body}`);
 }
 
 
-function saveData(email, name, placements, videos, hours, rvs, studies, comments)
+function saveData(email, secretary_email, name, placements, videos, hours, rvs, studies, comments, gmail)
 {
     const d = new Date();
     const m = d.getMonth() - 1;
     const y = getYear();
     window.localStorage.setItem("email", email);
+    window.localStorage.setItem("secretary_email", secretary_email);
     window.localStorage.setItem("name", name);
     window.localStorage.setItem("placements", placements.toString());
     window.localStorage.setItem("videos", videos.toString());
@@ -63,6 +64,7 @@ function saveData(email, name, placements, videos, hours, rvs, studies, comments
     window.localStorage.setItem("comments", comments);
     window.localStorage.setItem("month", m.toString());
     window.localStorage.setItem("year", y.toString());
+    window.localStorage.setItem("gmail", gmail.toString());
 }
 
 
@@ -85,10 +87,13 @@ function getElement(id)
 }
 
 
-function populateData(email, name, placements, videos, hours, rvs, studies, comments)
+function populateData(email, secretary_email, name, placements, videos, hours, rvs, studies, comments, gmail)
 {
     if (email) {
         setElement("email", email);
+    }
+    if (secretary_email) {
+        setElement("secretary-email", secretary_email);
     }
     if (name) {
         setElement("name", name);
@@ -100,6 +105,10 @@ function populateData(email, name, placements, videos, hours, rvs, studies, comm
     setElement("studies", studies);
     if (comments) {
         setElement("comments", comments);
+    }
+    const gmail_checkbox = document.getElementById("gmail");
+    if (gmail_checkbox) {
+        gmail_checkbox.checked = gmail;
     }
 }
 
@@ -115,13 +124,15 @@ function postLoad()
     }
     const email = window.localStorage.getItem("email");
     const name = window.localStorage.getItem("name");
+    const secretary_email = window.localStorage.getItem("secretary_email");
     const placements = parseInt(window.localStorage.getItem("placements"));
     const videos = parseInt(window.localStorage.getItem("videos"));
     const hours = parseInt(window.localStorage.getItem("hours"));
     const rvs = parseInt(window.localStorage.getItem("rvs"));
     const studies = parseInt(window.localStorage.getItem("studies"));
     const comments = window.localStorage.getItem("comments");
-    populateData(email, name, placements, videos, hours, rvs, studies, comments);
+    const gmail = (window.localStorage.getItem("gmail") === "true");
+    populateData(email, secretary_email, name, placements, videos, hours, rvs, studies, comments, gmail);
     const storedMonth = parseInt(window.localStorage.getItem("month"));
     const storedYear = parseInt(window.localStorage.getItem("year"));
     if (storedMonth === m && storedYear === y) {
@@ -130,10 +141,9 @@ function postLoad()
 }
 
 
-function makeReport(month, year, placements, videos, hours, rvs, studies, comments)
+function makeReport(month, year, placements, videos, hours, rvs, studies, comments, gmail)
 {
-    //const newline = "\r\n%0D%0A";
-    const newline = "<br>";
+    const newline = (gmail ? "\n" : "<br>");
     var s = `
     For ${getMonthName(month)} ${year}:${newline}
     
@@ -167,6 +177,7 @@ function sendReport()
 {
     const d = new Date();
     const email = getElement("email");
+    const secretary_email = getElement("secretary-email");
     const name = getElement("name");
     const placements = getElement("placements");
     const videos = getElement("videos");
@@ -174,19 +185,24 @@ function sendReport()
     const rvs = getElement("rvs");
     const studies = getElement("studies");
     const comments = getElement("comments");
+    const gmail = getElement("gmail");
     const month = d.getMonth() - 1;
     const year = getYear();
     if (!email.value || email.value === "overseer@email.com") {
         setAlertText("Must enter a valid email address for Service Group Overseer.");
         return;
     }
+    if (!secretary_email.value || secretary_email.value === "secretary@email.com") {
+        setAlertText("Must enter a valid email address for Congregation Secretary.");
+        return;
+    }
     if (!name.value || name.value === "Your name") {
         setAlertText("Please include your name.");
         return;
     }
-    saveData(email.value, name.value, placements.value, videos.value, hours.value, rvs.value, studies.value, comments.value);
-    const r = makeReport(month, year, placements.value, videos.value, hours.value, rvs.value, studies.value, comments.value);
-    sendMail(name.value, getMonthName(month), email.value, r);
+    saveData(email.value, secretary_email.value, name.value, placements.value, videos.value, hours.value, rvs.value, studies.value, comments.value, gmail.checked);
+    const r = makeReport(month, year, placements.value, videos.value, hours.value, rvs.value, studies.value, comments.value, gmail.checked);
+    sendMail(name.value, getMonthName(month), email.value, secretary_email.value, r);
     setAlertText(`Report submitted for ${getMonthName(month)} ${year}`);
 }
 

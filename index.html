@@ -17,11 +17,18 @@
         <p>
 
         <div class="w3-container">
-
+            <div style="width: 45%; float: left; display: block;">
             <label class="w3-text-blue"><b>Service Group Overseer Email</b></label>
             <input class="w3-input w3-border w3-light-grey" type="text" id="email" placeholder="overseer@email.com">
+            </div>
+            <div style="width: 45%; float: right; display: block;">
+            <label class="w3-text-blue"><b>Secretary Email</b></label>
+            <input class="w3-input w3-border w3-light-grey" type="text" id="secretary-email" placeholder="secretary@email.com">
+            </div>
             <p>
-            <label class="w3-text-blue"><b>Publisher Name</b></label>
+            <div style="clear: both;">
+            </div>
+            <label class="w3-text-blue" ><b>Publisher Name</b></label>
             <input class="w3-input w3-border w3-light-grey" type="text" id="name" placeholder="Your name">
             <p>
             <label class="w3-text-blue"><b>Placements (Printed and Electronic)</b></label>
@@ -42,7 +49,14 @@
             <label class="w3-text-blue"><b>Comments</b></label>
             <input class="w3-input w3-border w3-light-grey" type="text" id="comments">
             
-            <p><button class="w3-btn w3-blue" onclick="sendReport()">Send</button></p>
+            <p>
+            <button class="w3-btn w3-blue" onclick="sendReport()">Send</button>
+
+            <span class="w3-round-small w3-padding-small w3-blue" style="float: right;">
+            <input type="checkbox" id="gmail" name="gmailCheck" value="gmail">
+            <label for="gmail">I'm using GMail</label>
+            </span>
+            </p>
         
             </div>
     </div>
