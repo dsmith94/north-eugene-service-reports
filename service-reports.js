@@ -217,6 +217,7 @@ function handleServiceWorker()
 
 function handleBeforeInstall()
 {
+    console.log("The before install prompt tested here");
     window.addEventListener('beforeinstallprompt', (event) => {
         console.log('Before install event registered', 'beforeinstallprompt', event);
         window.deferredPrompt = event;
