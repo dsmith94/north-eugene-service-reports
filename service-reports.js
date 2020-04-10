@@ -153,8 +153,7 @@ function postLoad()
 
 function makeReport(month, year, placements, videos, hours, rvs, studies, comments, gmail)
 {
-    //const newline = (gmail ? "<br>" : "\n");
-    const newline = "\n";
+    const newline = (gmail ? "<br>" : "\n");
     var s = `
     For ${getMonthName(month)} ${year}:${newline}
     
@@ -171,7 +170,6 @@ function makeReport(month, year, placements, videos, hours, rvs, studies, commen
     Comments: ${comments}${newline}
     
         `;
-    alert(encodeURIComponent(s));
     return encodeURIComponent(s);
 }
 
