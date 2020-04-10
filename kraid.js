@@ -44,7 +44,7 @@ function getMonthName(month)
 
 function sendMail(name, month, address, body)
 {
-   window.open(`mailto:${address}?subject=${name} Field Service Report&body=${body}`);
+   window.open(`mailto:${address}?subject=${name} Field Service Report&enctype="text/plain"&body=${body}`);
 }
 
 
@@ -132,15 +132,25 @@ function postLoad()
 
 function makeReport(month, year, placements, videos, hours, rvs, studies, comments)
 {
-    return encodeURIComponent(`
-For ${getMonthName(month)} ${year}:\n
-Placements (Printed and Electronic): ${placements}\n
-Video Showings: ${videos}\n
-Hours: ${hours}\n
-Return Visits: ${rvs}\n
-Number of Different Bible Studies Conducted: ${studies}\n
-Comments: ${comments}\n
-    `);
+    const newline = "\r\n%0D%0A";
+    var s = `
+    For ${getMonthName(month)} ${year}:${newline}
+    
+    Placements (Printed and Electronic): ${placements}${newline}
+    
+    Video Showings: ${videos}${newline}
+    
+    Hours: ${hours}${newline}
+    
+    Return Visits: ${rvs}${newline}
+    
+    Number of Different Bible Studies Conducted: ${studies}${newline}
+    
+    Comments: ${comments}${newline}
+    
+        `;
+    alert ("");
+    return "testing%0D%0Atesting%0D%0Atesting%0D%0A";
 }
 
 
