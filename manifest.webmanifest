@@ -14,9 +14,8 @@
         "sizes": "512x512"
       }
     ],
-    "start_url": "https://dsmith94.github.io/north-eugene-service-reports/index.html",
+    "start_url": "index.html",
     "background_color": "#2196f3",
     "display": "standalone",
-    "scope": "/",
     "theme_color": "#2196f3"
   }

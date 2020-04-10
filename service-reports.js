@@ -46,14 +46,13 @@ function getMonthName(month)
 
 function sendMail(name, month, email, secretary_email, body)
 {
-   window.open(`mailto:${email}&cc=${secretary_email}?subject=${name} Field Service Report ${month}&enctype="text/plain"&body=${body}`);
+   window.open(`mailto:${email}?cc=${secretary_email}&subject=${name} Field Service Report ${month}&enctype="application/x-www-form-urlencoded"&body=${body}`);
 }
 
 
-function saveData(email, secretary_email, name, placements, videos, hours, rvs, studies, comments, gmail)
+function saveData(email, secretary_email, name, month, placements, videos, hours, rvs, studies, comments, gmail)
 {
     const d = new Date();
-    const m = d.getMonth() - 1;
     const y = getYear();
     window.localStorage.setItem("email", email);
     window.localStorage.setItem("secretary_email", secretary_email);
@@ -64,7 +63,7 @@ function saveData(email, secretary_email, name, placements, videos, hours, rvs, 
     window.localStorage.setItem("rvs", rvs.toString());
     window.localStorage.setItem("studies", studies.toString());
     window.localStorage.setItem("comments", comments);
-    window.localStorage.setItem("month", m.toString());
+    window.localStorage.setItem("month", month.toString());
     window.localStorage.setItem("year", y.toString());
     window.localStorage.setItem("gmail", gmail.toString());
 }
@@ -117,12 +116,19 @@ function populateData(email, secretary_email, name, placements, videos, hours, r
 
 function postLoad()
 {
+    const monthSelect = getElement("month");
     const e = getElement("headerText");
     const d = new Date();
     const m = d.getMonth() - 1;
     const y = getYear();
     if (e) {
-        e.textContent = `North Eugene Field Service Report: ${getMonthName(m)} ${y}`
+        e.textContent = `North Eugene Field Service Report`
+    }
+    if (m > -1) {
+        monthSelect.value = m;
+    }
+    else {
+        monthSelect.value = 11;
     }
     const email = window.localStorage.getItem("email");
     const name = window.localStorage.getItem("name");
@@ -137,15 +143,17 @@ function postLoad()
     populateData(email, secretary_email, name, placements, videos, hours, rvs, studies, comments, gmail);
     const storedMonth = parseInt(window.localStorage.getItem("month"));
     const storedYear = parseInt(window.localStorage.getItem("year"));
-    if (storedMonth === m && storedYear === y) {
-        setAlertText(`Report submitted for ${getMonthName(m)} ${y}`);
+    if (storedYear) {
+        if (storedMonth === m && storedYear === y) {
+            setAlertText(`Report submitted for ${getMonthName(storedMonth)} ${y}`);
+        }
     }
 }
 
 
 function makeReport(month, year, placements, videos, hours, rvs, studies, comments, gmail)
 {
-    const newline = (gmail ? "\n" : "<br>");
+    const newline = (gmail ? "\u0009" : "\n");
     var s = `
     For ${getMonthName(month)} ${year}:${newline}
     
@@ -188,7 +196,8 @@ function sendReport()
     const studies = getElement("studies");
     const comments = getElement("comments");
     const gmail = getElement("gmail");
-    const month = d.getMonth() - 1;
+    const monthSelect = getElement("month");
+    const month = monthSelect.value;
     const year = getYear();
     if (!email.value || email.value === "overseer@email.com") {
         setAlertText("Must enter a valid email address for Service Group Overseer.");
@@ -202,7 +211,7 @@ function sendReport()
         setAlertText("Please include your name.");
         return;
     }
-    saveData(email.value, secretary_email.value, name.value, placements.value, videos.value, hours.value, rvs.value, studies.value, comments.value, gmail.checked);
+    saveData(email.value, secretary_email.value, name.value, month, placements.value, videos.value, hours.value, rvs.value, studies.value, comments.value, gmail.checked);
     const r = makeReport(month, year, placements.value, videos.value, hours.value, rvs.value, studies.value, comments.value, gmail.checked);
     sendMail(name.value, getMonthName(month), email.value, secretary_email.value, r);
     setAlertText(`Report submitted for ${getMonthName(month)} ${year}`);
@@ -210,6 +219,7 @@ function sendReport()
 
 
 
+/*
 function handleBeforeInstall()
 {
     const installButton = document.getElementById("install-button");
@@ -233,13 +243,14 @@ function handleBeforeInstall()
         });
       });
 }
+*/
 
 
 window.onload = function()
 {
     /* Only register a service worker if it's supported */
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js');
+        navigator.serviceWorker.register('./service-worker.js');
     }
     postLoad();
 };
