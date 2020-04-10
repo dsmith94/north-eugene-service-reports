@@ -224,26 +224,19 @@ function handleBeforeInstall()
     window.addEventListener('beforeinstallprompt', (event) => {
         console.log('👍', 'beforeinstallprompt', event);
         deferredPrompt = event;
-        installButton.style.visibility = "hidden";
+        installButton.style.visibility = "visible";
       });
-}
-
-
-function handleInstall()
-{
-    const installButton = document.getElementById("install-button");
-    installButton.addEventListener('click', () => {
-        const promptEvent = deferredPrompt;
+      installButton.addEventListener('click', () => {
         // Show the install prompt.
-        promptEvent.prompt();
+        deferredPrompt.prompt();
         // Log the result
-        promptEvent.userChoice.then((result) => {
+        deferredPrompt.userChoice.then((result) => {
           console.log('👍', 'userChoice', result);
           // Reset the deferred prompt variable, since
           // prompt() can only be called once.
           deferredPrompt = null;
           // Hide the install button.
-          installButton.style.visibility = "visible";
+          installButton.style.visibility = "hidden";
         });
       });
 }
@@ -255,7 +248,6 @@ window.onload = function()
     installButton.style.visibility = "hidden";
     handleServiceWorker();
     handleBeforeInstall();
-    handleInstall();
     window.addEventListener('appinstalled', (event) => {
         console.log('app installed', 'appinstalled', event);
         const installButton = document.getElementById("install-button");
