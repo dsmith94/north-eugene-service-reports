@@ -149,8 +149,7 @@ function makeReport(month, year, placements, videos, hours, rvs, studies, commen
     Comments: ${comments}${newline}
     
         `;
-    alert ("");
-    return "testing%0D%0Atesting%0D%0Atesting%0D%0A";
+    return "testing<br>testing<br>testing<br>";
 }
 
 
