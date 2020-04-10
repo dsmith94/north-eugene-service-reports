@@ -116,6 +116,10 @@ function populateData(email, secretary_email, name, placements, videos, hours, r
 
 function postLoad()
 {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const overseerAddress = urlParams.get('fsgo');
+    const secretaryAddress = urlParams.get('sec');
     const monthSelect = getElement("month");
     const e = getElement("headerText");
     const d = new Date();
@@ -130,9 +134,15 @@ function postLoad()
     else {
         monthSelect.value = 11;
     }
-    const email = window.localStorage.getItem("email");
     const name = window.localStorage.getItem("name");
-    const secretary_email = window.localStorage.getItem("secretary_email");
+    var email = window.localStorage.getItem("email");
+    if (overseerAddress) {
+        email = overseerAddress;
+    }
+    var secretaryEmail = window.localStorage.getItem("secretary_email");
+    if (secretaryAddress) {
+        secretaryEmail = secretaryAddress;
+    }
     const placements = parseInt(window.localStorage.getItem("placements"));
     const videos = parseInt(window.localStorage.getItem("videos"));
     const hours = parseInt(window.localStorage.getItem("hours"));
@@ -140,7 +150,7 @@ function postLoad()
     const studies = parseInt(window.localStorage.getItem("studies"));
     const comments = window.localStorage.getItem("comments");
     const gmail = (window.localStorage.getItem("gmail") === "true");
-    populateData(email, secretary_email, name, placements, videos, hours, rvs, studies, comments, gmail);
+    populateData(email, secretaryEmail, name, placements, videos, hours, rvs, studies, comments, gmail);
     const storedMonth = parseInt(window.localStorage.getItem("month"));
     const storedYear = parseInt(window.localStorage.getItem("year"));
     if (storedYear) {
