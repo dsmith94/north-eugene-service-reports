@@ -1,4 +1,6 @@
 
+var deferredPrompt;
+
 function getYear()
 {
     const d = new Date();
@@ -217,10 +219,12 @@ function handleServiceWorker()
 
 function handleBeforeInstall()
 {
+    const installButton = document.getElementById("install-button");
     console.log("The before install prompt tested here");
     window.addEventListener('beforeinstallprompt', (event) => {
         console.log('👍', 'beforeinstallprompt', event);
-        window.deferredPrompt = event;
+        deferredPrompt = event;
+        installButton.hidden = false;
       });
 }
 
@@ -229,7 +233,7 @@ function handleInstall()
 {
     const installButton = document.getElementById("install-button");
     installButton.addEventListener('click', () => {
-        const promptEvent = window.deferredPrompt;
+        const promptEvent = deferredPrompt;
         // Show the install prompt.
         promptEvent.prompt();
         // Log the result
@@ -237,7 +241,7 @@ function handleInstall()
           console.log('👍', 'userChoice', result);
           // Reset the deferred prompt variable, since
           // prompt() can only be called once.
-          window.deferredPrompt = null;
+          deferredPrompt = null;
           // Hide the install button.
           installButton.hidden = true;
         });
@@ -247,6 +251,8 @@ function handleInstall()
 
 window.onload = function()
 {
+    const installButton = document.getElementById("install-button");
+    installButton.hidden = true;
     handleServiceWorker();
     handleBeforeInstall();
     handleInstall();
