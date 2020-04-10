@@ -1,6 +1,6 @@
 {
     "short_name": "ServiceReport",
-    "name": "Service Report",
+    "name": "North Eugene Service Report",
     "description": "Turn in field service report",
     "icons": [
       {
@@ -14,7 +14,7 @@
         "sizes": "512x512"
       }
     ],
-    "start_url": "index.html",
+    "start_url": "https://dsmith94.github.io/north-eugene-service-reports/index.html",
     "background_color": "#2196f3",
     "display": "standalone",
     "scope": "/",

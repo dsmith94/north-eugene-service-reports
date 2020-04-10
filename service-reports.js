@@ -209,13 +209,6 @@ function sendReport()
 }
 
 
-function handleServiceWorker()
-{
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js');
-      }
-}
-
 
 function handleBeforeInstall()
 {
@@ -244,15 +237,6 @@ function handleBeforeInstall()
 
 window.onload = function()
 {
-    const installButton = document.getElementById("install-button");
-    installButton.style.visibility = "hidden";
-    handleServiceWorker();
-    handleBeforeInstall();
-    window.addEventListener('appinstalled', (event) => {
-        console.log('app installed', 'appinstalled', event);
-        const installButton = document.getElementById("install-button");
-        installButton.hidden = true;
-      });
     postLoad();
 };
 
