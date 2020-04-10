@@ -219,7 +219,7 @@ function handleBeforeInstall()
 {
     console.log("The before install prompt tested here");
     window.addEventListener('beforeinstallprompt', (event) => {
-        console.log('Before install event registered', 'beforeinstallprompt', event);
+        console.log('👍', 'beforeinstallprompt', event);
         window.deferredPrompt = event;
       });
 }
@@ -229,8 +229,8 @@ function handleInstall()
 {
     const installButton = document.getElementById("install-button");
     installButton.addEventListener('click', () => {
-        console.log('👍', 'install-button clicked');
         const promptEvent = window.deferredPrompt;
+        console.log('👍', promptEvent);
         if (!promptEvent) {
           // The deferred prompt isn't available.
           return;
