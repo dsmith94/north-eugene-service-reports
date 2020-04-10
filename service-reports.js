@@ -207,16 +207,58 @@ function sendReport()
 }
 
 
-window.onload = function()
+function handleServiceWorker()
 {
     if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('service-worker.js')
-              .then((reg) => {
-                console.log('Service worker registered.', reg);
-              });
+        navigator.serviceWorker.register('service-worker.js');
+      }
+}
+
+
+function handleBeforeInstall()
+{
+    window.addEventListener('beforeinstallprompt', (event) => {
+        console.log('Before install event registered', 'beforeinstallprompt', event);
+        window.deferredPrompt = event;
+      });
+}
+
+
+function handleInstall()
+{
+    const installButton = document.getElementById("install-button");
+    installButton.addEventListener('click', () => {
+        console.log('👍', 'install-button clicked');
+        const promptEvent = window.deferredPrompt;
+        if (!promptEvent) {
+          // The deferred prompt isn't available.
+          return;
+        }
+        // Show the install prompt.
+        promptEvent.prompt();
+        // Log the result
+        promptEvent.userChoice.then((result) => {
+          console.log('👍', 'userChoice', result);
+          // Reset the deferred prompt variable, since
+          // prompt() can only be called once.
+          window.deferredPrompt = null;
+          // Hide the install button.
+          installButton.hidden = true;
         });
-    }
+      });
+}
+
+
+window.onload = function()
+{
+    handleServiceWorker();
+    handleBeforeInstall();
+    handleInstall();
+    window.addEventListener('appinstalled', (event) => {
+        console.log('app installed', 'appinstalled', event);
+        const installButton = document.getElementById("install-button");
+        installButton.hidden = true;
+      });
     postLoad();
 };
 
