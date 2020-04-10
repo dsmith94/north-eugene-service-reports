@@ -224,7 +224,7 @@ function handleBeforeInstall()
     window.addEventListener('beforeinstallprompt', (event) => {
         console.log('👍', 'beforeinstallprompt', event);
         deferredPrompt = event;
-        installButton.hidden = false;
+        installButton.style.visibility = "hidden";
       });
 }
 
@@ -243,7 +243,7 @@ function handleInstall()
           // prompt() can only be called once.
           deferredPrompt = null;
           // Hide the install button.
-          installButton.hidden = true;
+          installButton.style.visibility = "visible";
         });
       });
 }
@@ -252,7 +252,7 @@ function handleInstall()
 window.onload = function()
 {
     const installButton = document.getElementById("install-button");
-    installButton.hidden = true;
+    installButton.style.visibility = "hidden";
     handleServiceWorker();
     handleBeforeInstall();
     handleInstall();
