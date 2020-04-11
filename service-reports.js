@@ -207,7 +207,7 @@ function sendReport()
     const comments = getElement("comments");
     const gmail = getElement("gmail");
     const monthSelect = getElement("month");
-    const month = monthSelect.value;
+    const month = parseInt(monthSelect.value);
     const year = getYear();
     if (!email.value || email.value === "overseer@email.com") {
         setAlertText("Must enter a valid email address for Service Group Overseer.");
