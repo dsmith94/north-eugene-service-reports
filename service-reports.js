@@ -161,21 +161,32 @@ function postLoad()
 }
 
 
+function handleZero(s)
+{
+    if (!s) {
+        return "0";
+    }
+    else {
+        return s;
+    }
+}
+
+
 function makeReport(month, year, placements, videos, hours, rvs, studies, comments, gmail)
 {
     const newline = (gmail ? "<br>" : "\n");
     var s = `
     For ${getMonthName(month)} ${year}:${newline}
     
-    Placements (Printed and Electronic): ${placements}${newline}
+    Placements (Printed and Electronic): ${handleZero(placements)}${newline}
     
-    Video Showings: ${videos}${newline}
+    Video Showings: ${handleZero(videos)}${newline}
     
-    Hours: ${hours}${newline}
+    Hours: ${handleZero(hours)}${newline}
     
-    Return Visits: ${rvs}${newline}
+    Return Visits: ${handleZero(rvs)}${newline}
     
-    Number of Different Bible Studies Conducted: ${studies}${newline}
+    Number of Different Bible Studies Conducted: ${handleZero(studies)}${newline}
     
     Comments: ${comments}${newline}
     
