@@ -88,7 +88,7 @@ function getElement(id)
 }
 
 
-function populateData(email, secretary_email, name, placements, videos, hours, rvs, studies, comments, gmail)
+function populateData(email, secretary_email, name, placements, videos, hours, rvs, studies, comments)
 {
     if (email) {
         setElement("email", email);
@@ -106,10 +106,6 @@ function populateData(email, secretary_email, name, placements, videos, hours, r
     setElement("studies", studies);
     if (comments) {
         setElement("comments", comments);
-    }
-    const gmail_checkbox = document.getElementById("gmail");
-    if (gmail_checkbox) {
-        gmail_checkbox.checked = gmail;
     }
 }
 
@@ -149,8 +145,9 @@ function postLoad()
     const rvs = parseInt(window.localStorage.getItem("rvs"));
     const studies = parseInt(window.localStorage.getItem("studies"));
     const comments = window.localStorage.getItem("comments");
-    const gmail = (window.localStorage.getItem("gmail") === "true");
-    populateData(email, secretaryEmail, name, placements, videos, hours, rvs, studies, comments, gmail);
+    //const gmail = (window.localStorage.getItem("gmail") === "true");
+    const gmail = false;
+    populateData(email, secretaryEmail, name, placements, videos, hours, rvs, studies, comments);
     const storedMonth = parseInt(window.localStorage.getItem("month"));
     const storedYear = parseInt(window.localStorage.getItem("year"));
     if (storedYear) {
