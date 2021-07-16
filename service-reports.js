@@ -50,7 +50,7 @@ function sendMail(name, month, email, secretary_email, body)
 }
 
 
-function saveData(email, secretary_email, name, month, placements, videos, hours, rvs, studies, comments, gmail)
+function saveData(email, secretary_email, name, month, placements, videos, hours, rvs, studies, comments)
 {
     const d = new Date();
     const y = getYear();
@@ -65,7 +65,6 @@ function saveData(email, secretary_email, name, month, placements, videos, hours
     window.localStorage.setItem("comments", comments);
     window.localStorage.setItem("month", month.toString());
     window.localStorage.setItem("year", y.toString());
-    window.localStorage.setItem("gmail", gmail.toString());
 }
 
 
@@ -169,9 +168,9 @@ function handleZero(s)
 }
 
 
-function makeReport(month, year, placements, videos, hours, rvs, studies, comments, gmail)
+function makeReport(month, year, placements, videos, hours, rvs, studies, comments)
 {
-    const newline = (gmail ? "<br>" : "\n");
+    const newline = "\n";
     var s = `
     For ${getMonthName(month)} ${year}:${newline}
     
@@ -213,7 +212,6 @@ function sendReport()
     const rvs = getElement("rvs");
     const studies = getElement("studies");
     const comments = getElement("comments");
-    const gmail = getElement("gmail");
     const monthSelect = getElement("month");
     const month = parseInt(monthSelect.value);
     const year = getYear();
@@ -229,8 +227,8 @@ function sendReport()
         setAlertText("Please include your name.");
         return;
     }
-    saveData(email.value, secretary_email.value, name.value, month, placements.value, videos.value, hours.value, rvs.value, studies.value, comments.value, gmail.checked);
-    const r = makeReport(month, year, placements.value, videos.value, hours.value, rvs.value, studies.value, comments.value, gmail.checked);
+    saveData(email.value, secretary_email.value, name.value, month, placements.value, videos.value, hours.value, rvs.value, studies.value, comments.value);
+    const r = makeReport(month, year, placements.value, videos.value, hours.value, rvs.value, studies.value, comments.value);
     sendMail(name.value, getMonthName(month), email.value, secretary_email.value, r);
     setAlertText(`Report submitted for ${getMonthName(month)} ${year}`);
 }
